@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ILC • Ilham Komputer</title>
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; font-family:'Poppins', sans-serif; background:#040818; color:#e0e8ff; }
+  h2 { text-align:center; margin-bottom:30px; }
+  section { padding:50px 10%; box-sizing:border-box; }
+
+  /* Navbar */
+  .navbar { display:flex; justify-content:space-between; align-items:center; padding:15px 10%; background:#0b132b; position:sticky; top:0; z-index:1000; }
+  .navbar ul { list-style:none; display:flex; gap:20px; }
+  .navbar a { color:#fff; text-decoration:none; font-weight:600; }
+  .logo-img { width:120px; }
+
+  /* Hero */
+  .hero { position:relative; text-align:center; color:#fff; height:70vh; display:flex; align-items:center; justify-content:center; }
+  .hero video { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+  .hero .overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:0; }
+  .hero-content { z-index:1; max-width:700px; }
+  .hero-content h1 { font-size:2.2rem; margin-bottom:15px; }
+  .hero-content p { margin-bottom:20px; }
+  .btn { background:#00d4ff; color:#0b132b; padding:10px 25px; border-radius:8px; text-decoration:none; font-weight:bold; transition:0.3s; }
+  .btn:hover { background:#00aaff; }
+
+  /* Layanan */
+  .services { background:#040818; }
+  .service-list { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .service { background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; flex:1 1 280px; max-width:300px; box-sizing:border-box; opacity:0; transform:translateY(20px); animation:fadeUp 1s ease forwards; }
+  .service img { width:100%; border-radius:10px; margin-bottom:10px; }
+
+  /* Tentang */
+  .about { background:#0b132b; color:#e0e8ff; }
+  .about .columns { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
+  .about .column { flex:1 1 300px; min-width:280px; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; opacity:0; transform:translateY(20px); animation:fadeUp 1s ease forwards; }
+  .about ul { padding-left:20px; }
+
+  /* Testimonial */
+  .testimonials { background:#0a1a2f; }
+  .testimonial-list { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
+  .testimonial-item { background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; flex:1 1 250px; max-width:300px; opacity:0; transform:translateY(20px); animation:fadeUp 1s ease forwards; }
+  .testimonial-item b { color:#00d4ff; }
+
+  /* Form-box */
+  .form-box { background: rgba(255,255,255,0.05); padding:20px; border-radius:12px; margin-bottom:30px; max-width:500px; margin-left:auto; margin-right:auto; }
+  .form-box input, .form-box textarea { width:100%; padding:10px; margin:10px 0; border-radius:8px; border:none; background: rgba(255,255,255,0.1); color:#fff; box-sizing:border-box; }
+  .form-box button { background:#00d4ff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; color:#0b132b; transition:0.3s; }
+  .form-box button:hover { background:#00aaff; }
+
+  /* Contact */
+  .contact form { max-width:500px; margin:0 auto; display:flex; flex-direction:column; gap:10px; }
+
+  /* Footer */
+  footer { text-align:center; padding:20px; background:#0b132b; }
+
+  /* Floating WA */
+  #whatsappButton { position:fixed; bottom:25px; right:25px; width:60px; height:60px; z-index:100; }
+
+  /* Animasi */
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+  <div class="logo-ai"><img src="ilkom.png" alt="Ilham Comp Logo" class="logo-img" /></div>
+  <ul>
+    <li><a href="#home">Beranda</a></li>
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#tentang">Tentang</a></li>
+    <li><a href="#testimonial">Testimonial</a></li>
+    <li><a href="#kontak">Kontak</a></li>
+  </ul>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <video autoplay muted loop playsinline>
+    <source src="hero2.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <h1>Solusi Teknologi Modern untuk Keamanan & Konektivitas Anda</h1>
+    <p>Kami menyediakan jasa pemasangan CCTV, komputer, dan jaringan dengan hasil profesional dan bergaransi.</p>
+    <a href="#kontak" class="btn">Hubungi Kami</a>
+  </div>
+</section>
+
+
+
+
+
+<!-- Layanan -->
+<section id="layanan" class="services">
+  <h2>Layanan Kami</h2>
+  <div class="service-list" id="serviceList">
+    <div class="service fade-up">
+      <img src="https://via.placeholder.com/300x200?text=CCTV" alt="Instalasi CCTV" />
+      <h3>Instalasi CCTV</h3>
+      <p>Pemasangan kamera pengawas dengan kualitas tinggi dan garansi.</p>
+    </div>
+    <!-- Tambah layanan lainnya -->
+  </div>
+</section>
+
+
+
+
+<!-- Tentang -->
+<section id="tentang" class="about">
+  <h2>Tentang ILC</h2>
+  <div class="columns">
+    <div class="column">
+      <h3>about me</h3>
+      <p>ILC (Ilham Komputer) telah melayani pelanggan sejak 2010 dalam bidang instalasi CCTV, jaringan komputer, dan perbaikan hardware. Kami mengutamakan kualitas, profesionalisme, dan kepuasan pelanggan.</p>
+    </div>
+    <div class="column">
+      <h3>Visi & Misi</h3>
+      <p><b>Visi:</b> Menjadi penyedia solusi teknologi terpercaya di Indonesia.</p>
+      <p><b>Misi:</b></p>
+      <ul>
+        <li>Menyediakan layanan instalasi CCTV dan jaringan berkualitas tinggi.</li>
+        <li>Memberikan layanan perbaikan komputer yang cepat dan handal.</li>
+        <li>Menjaga kepuasan pelanggan dengan layanan bergaransi.</li>
+      </ul>
+    </div>
+    <div class="column">
+      <h3>Keunggulan Kami</h3>
+      <ul>
+        <li>Teknisi berpengalaman dan bersertifikat</li>
+        <li>Teknologi terbaru dan terjamin kualitasnya</li>
+        <li>Harga kompetitif dan transparan</li>
+        <li>Layanan garansi & purna jual</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section id="testimonial" class="testimonials">
+  <h2>Testimonial Pelanggan</h2>
+  <div class="form-box">
+    <h3>Tulis Testimonial Anda</h3>
+    <input type="text" id="testiNama" placeholder="Nama Anda" required>
+    <textarea id="testiPesan" placeholder="Tulis pesan/testimonial Anda" required></textarea>
+    <button id="kirimTesti">Kirim Testimonial</button>
+  </div>
+  <div class="testimonial-list" id="testimonialList"></div>
+</section>
+
+<!-- Contact -->
+<!-- Contact -->
+<section id="kontak" class="contact">
+  <h2>Hubungi Kami</h2>
+  <p>Isi form berikut untuk langsung terhubung via WhatsApp!</p>
+  <form id="whatsappForm" class="form-box elegant-form">
+    <!-- Nama -->
+    <div class="form-group">
+      <input type="text" id="nama" placeholder="Nama Anda" required>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <input type="email" id="email" placeholder="Email Anda" required>
+    </div>
+
+    <!-- Keluhan -->
+    <div class="form-group">
+      <select id="keluhan" required>
+        <option value="" disabled selected>Keluhan</option>
+        <option value="laptop">Laptop</option>
+        <option value="cctv">CCTV</option>
+        <option value="dll">Lainnya</option>
+      </select>
+    </div>
+
+    <!-- Pesan tambahan -->
+    <div class="form-group">
+      <textarea id="pesan" placeholder="Pesan tambahan (opsional)"></textarea>
+    </div>
+
+    <!-- Tombol kirim -->
+    <button type="submit" class="btn">Kirim Pesan</button>
+  </form>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 ILC - Ilham Komputer. All Rights Reserved.</p>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="#" id="whatsappButton" target="_blank" title="Chat via WhatsApp">
+  <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" alt="WhatsApp">
+</a>
+
+<script>
+const nomorWhatsApp = "6285342771013";
+
+  /// WhatsApp form
+document.getElementById("whatsappForm").addEventListener("submit", e => {
+  e.preventDefault();
+
+  const nama = document.getElementById("nama").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const keluhan = document.getElementById("keluhan").value; // ambil value dari select
+  const pesan = document.getElementById("pesan").value.trim();
+
+  const text = `Halo ILC, saya *${nama}* ingin menghubungi Anda.%0A%0A📧 Email: ${email}%0A🛠 Keluhan: ${keluhan}%0A📝 Pesan:%0A${pesan}`;
+
+  window.open(`https://wa.me/${nomorWhatsApp}?text=${text}`, "_blank");
+});
+
+// Floating WhatsApp button
+document.getElementById("whatsappButton").href = `https://wa.me/${nomorWhatsApp}?text=Halo%20ILC,%20saya%20tertarik%20dengan%20layanan%20Anda.`;
+
+let buffer="";
+document.addEventListener("keydown", e=>{
+  buffer+=e.key.toLowerCase();
+  if(buffer.includes("ilcadmin")) window.location.href="admin.html";
+  if(buffer.length>8) buffer=buffer.slice(-8);
+});
+
+// Load data admin
+function muatDataAdmin(){
+  const layanan = JSON.parse(localStorage.getItem("layananILC")||"[]");
+  const serviceContainer = document.getElementById("serviceList");
+  serviceContainer.innerHTML="";
+  layanan.forEach(item=>{
+    const el=document.createElement("div");
+    el.className="service fade-up";
+    el.innerHTML=`
+      <img src="${item.gambar}" alt="${item.judul}">
+      <h3>${item.judul}</h3>
+      <p>${item.deskripsi}</p>
+    `;
+    serviceContainer.appendChild(el);
+  });
+
+  const tentang = localStorage.getItem("tentangILC");
+  if(tentang) document.getElementById("tentangText").textContent=tentang;
+
+  renderTesti();
+}
+
+// Testimonial
+const testiNama=document.getElementById("testiNama");
+const testiPesan=document.getElementById("testiPesan");
+const kirimTestiBtn=document.getElementById("kirimTesti");
+const testiContainer=document.getElementById("testimonialList");
+
+function renderTesti(){
+  const testi=JSON.parse(localStorage.getItem("testiUser")||"[]");
+  testiContainer.innerHTML="";
+  testi.forEach(t=>{
+    const el=document.createElement("div");
+    el.className="testimonial-item fade-up";
+    el.innerHTML=`<b>${t.nama}</b><p>${t.pesan}</p>`;
+    testiContainer.appendChild(el);
+  });
+}
+
+kirimTestiBtn.addEventListener("click", ()=>{
+  const nama=testiNama.value.trim();
+  const pesan=testiPesan.value.trim();
+  if(!nama||!pesan)return alert("Isi nama dan pesan testimonial!");
+  const testi=JSON.parse(localStorage.getItem("testiUser")||"[]");
+  testi.push({nama,pesan});
+  localStorage.setItem("testiUser",JSON.stringify(testi));
+  testiNama.value="";
+  testiPesan.value="";
+  renderTesti();
+  window.dispatchEvent(new Event("storage"));
+});
+
+muatDataAdmin();
+window.addEventListener("storage", muatDataAdmin);
+</script>
+</body>
+</html>

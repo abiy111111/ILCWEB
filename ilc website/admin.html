@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin ILC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #0b132b; color: #fff; padding: 30px; }
+    h1 { color: #00d4ff; }
+    .form-box { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 25px; }
+    input, textarea { width: 100%; padding: 10px; margin: 10px 0; border-radius: 8px; border: none; background: rgba(255,255,255,0.1); color: #fff; }
+    button { background: #00d4ff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #0b132b; transition: 0.3s; }
+    button:hover { background: #00aaff; }
+    img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
+    .layanan-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.08); padding: 10px; border-radius: 8px; margin: 5px 0; }
+    .layanan-item span { flex: 1; margin-left: 10px; }
+    .danger { background: #ff3b3b; color: #fff; }
+    .danger:hover { background: #ff1e1e; }
+    .clear-btn { margin-top: 10px; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel ILC</h1>
+
+  <!-- Tambah layanan -->
+  <div class="form-box">
+    <h3>Tambah Layanan</h3>
+    <input type="text" id="judul" placeholder="Judul Layanan">
+    <textarea id="deskripsi" placeholder="Deskripsi Layanan"></textarea>
+    <input type="file" id="gambar" accept="image/*">
+    <button id="tambahLayanan">Tambah</button>
+  </div>
+
+  <!-- Layanan aktif -->
+  <div class="form-box">
+    <h3>Layanan Aktif</h3>
+    <div id="daftarLayanan"></div>
+  </div>
+
+  <!-- Layanan terhapus -->
+  <div class="form-box">
+    <h3>Layanan Terhapus</h3>
+    <div id="daftarHapus"></div>
+    <button class="danger clear-btn" onclick="hapusSemuaPermanen()">🗑️ Hapus Semua Permanen</button>
+  </div>
+
+  <!-- Testimonial aktif -->
+  <div class="form-box">
+    <h3>Testimonial Aktif</h3>
+    <div id="daftarTestimonial"></div>
+  </div>
+
+  <!-- Testimonial terhapus -->
+  <div class="form-box">
+    <h3>Testimonial Terhapus</h3>
+    <div id="daftarTestimonialHapus"></div>
+    <button class="danger clear-btn" onclick="hapusSemuaTestiPermanen()">🗑️ Hapus Semua Permanen</button>
+  </div>
+
+  <script>
+    const daftarLayanan = document.getElementById("daftarLayanan");
+    const daftarHapus = document.getElementById("daftarHapus");
+    const daftarTestimonial = document.getElementById("daftarTestimonial");
+    const daftarTestimonialHapus = document.getElementById("daftarTestimonialHapus");
+
+    // ==================== LAYANAN ====================
+    function renderLayanan() {
+      const layanan = JSON.parse(localStorage.getItem("layananILC") || "[]");
+      const hapus = JSON.parse(localStorage.getItem("layananTerhapusILC") || "[]");
+
+      daftarLayanan.innerHTML = layanan.length
+        ? layanan.map((l, i) => `
+          <div class="layanan-item">
+            ${l.gambar ? `<img src="${l.gambar}" alt="">` : ""}
+            <span><b>${l.judul}</b><br>${l.deskripsi}</span>
+            <button onclick="hapusLayanan(${i})">Hapus</button>
+          </div>`).join("")
+        : "<p>Tidak ada layanan aktif.</p>";
+
+      daftarHapus.innerHTML = hapus.length
+        ? hapus.map((l, i) => `
+          <div class="layanan-item">
+            ${l.gambar ? `<img src="${l.gambar}" alt="">` : ""}
+            <span><b>${l.judul}</b><br>${l.deskripsi}</span>
+            <div>
+              <button onclick="pulihkanLayanan(${i})">Pulihkan</button>
+              <button class="danger" onclick="hapusPermanen(${i})">Hapus Permanen</button>
+            </div>
+          </div>`).join("")
+        : "<p>Tidak ada layanan terhapus.</p>";
+    }
+
+    document.getElementById("tambahLayanan").addEventListener("click", () => {
+      const judul = document.getElementById("judul").value.trim();
+      const deskripsi = document.getElementById("deskripsi").value.trim();
+      const file = document.getElementById("gambar").files[0];
+      if (!judul || !deskripsi) return alert("Isi semua data!");
+
+      if(file){
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          simpanLayanan(judul, deskripsi, e.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        simpanLayanan(judul, deskripsi, ""); // kosong kalau tidak pakai gambar
+      }
+    });
+
+    function simpanLayanan(judul, deskripsi, gambar){
+      const layanan = JSON.parse(localStorage.getItem("layananILC") || "[]");
+      layanan.push({ judul, deskripsi, gambar });
+      localStorage.setItem("layananILC", JSON.stringify(layanan));
+      renderLayanan();
+      window.dispatchEvent(new Event("storage"));
+      document.getElementById("judul").value = "";
+      document.getElementById("deskripsi").value = "";
+      document.getElementById("gambar").value = "";
+      alert("✅ Layanan berhasil ditambahkan!");
+    }
+
+    function hapusLayanan(index) {
+      const layanan = JSON.parse(localStorage.getItem("layananILC") || "[]");
+      const hapus = JSON.parse(localStorage.getItem("layananTerhapusILC") || "[]");
+      hapus.push(layanan.splice(index, 1)[0]);
+      localStorage.setItem("layananILC", JSON.stringify(layanan));
+      localStorage.setItem("layananTerhapusILC", JSON.stringify(hapus));
+      renderLayanan();
+    }
+
+    function pulihkanLayanan(index) {
+      const layanan = JSON.parse(localStorage.getItem("layananILC") || "[]");
+      const hapus = JSON.parse(localStorage.getItem("layananTerhapusILC") || "[]");
+      layanan.push(hapus.splice(index, 1)[0]);
+      localStorage.setItem("layananILC", JSON.stringify(layanan));
+      localStorage.setItem("layananTerhapusILC", JSON.stringify(hapus));
+      renderLayanan();
+    }
+
+    function hapusPermanen(index) {
+      const hapus = JSON.parse(localStorage.getItem("layananTerhapusILC") || "[]");
+      if (confirm(`Hapus permanen "${hapus[index].judul}"?`)) {
+        hapus.splice(index, 1);
+        localStorage.setItem("layananTerhapusILC", JSON.stringify(hapus));
+        renderLayanan();
+      }
+    }
+
+    function hapusSemuaPermanen() {
+      if (confirm("Yakin hapus semua layanan terhapus secara permanen?")) {
+        localStorage.removeItem("layananTerhapusILC");
+        renderLayanan();
+      }
+    }
+
+    // ==================== TESTIMONIAL ====================
+    function renderTesti() {
+      const testi = JSON.parse(localStorage.getItem("testiUser") || "[]");
+      const hapusTesti = JSON.parse(localStorage.getItem("testiTerhapus") || "[]");
+
+      daftarTestimonial.innerHTML = testi.length
+        ? testi.map((t,i) => `
+          <div class="layanan-item">
+            <span><b>${t.nama}</b><br>${t.pesan}</span>
+            <button onclick="hapusTesti(${i})">Hapus</button>
+          </div>`).join("")
+        : "<p>Tidak ada testimonial aktif.</p>";
+
+      daftarTestimonialHapus.innerHTML = hapusTesti.length
+        ? hapusTesti.map((t,i) => `
+          <div class="layanan-item">
+            <span><b>${t.nama}</b><br>${t.pesan}</span>
+            <div>
+              <button onclick="pulihkanTesti(${i})">Pulihkan</button>
+              <button class="danger" onclick="hapusTestiPermanen(${i})">Hapus Permanen</button>
+            </div>
+          </div>`).join("")
+        : "<p>Tidak ada testimonial terhapus.</p>";
+    }
+
+    function hapusTesti(index) {
+      const testi = JSON.parse(localStorage.getItem("testiUser") || "[]");
+      const hapusTesti = JSON.parse(localStorage.getItem("testiTerhapus") || "[]");
+      hapusTesti.push(testi.splice(index, 1)[0]);
+      localStorage.setItem("testiUser", JSON.stringify(testi));
+      localStorage.setItem("testiTerhapus", JSON.stringify(hapusTesti));
+      renderTesti();
+    }
+
+    function pulihkanTesti(index) {
+      const testi = JSON.parse(localStorage.getItem("testiUser") || "[]");
+      const hapusTesti = JSON.parse(localStorage.getItem("testiTerhapus") || "[]");
+      testi.push(hapusTesti.splice(index, 1)[0]);
+      localStorage.setItem("testiUser", JSON.stringify(testi));
+      localStorage.setItem("testiTerhapus", JSON.stringify(hapusTesti));
+      renderTesti();
+    }
+
+    function hapusTestiPermanen(index) {
+      const hapusTesti = JSON.parse(localStorage.getItem("testiTerhapus") || "[]");
+      if(confirm(`Hapus permanen testimonial dari "${hapusTesti[index].nama}"?`)) {
+        hapusTesti.splice(index,1);
+        localStorage.setItem("testiTerhapus", JSON.stringify(hapusTesti));
+        renderTesti();
+      }
+    }
+
+    function hapusSemuaTestiPermanen() {
+      if(confirm("Yakin hapus semua testimonial terhapus secara permanen?")) {
+        localStorage.removeItem("testiTerhapus");
+        renderTesti();
+      }
+    }
+
+    // render semua
+    renderLayanan();
+    renderTesti();
+  </script>
+</body>
+</html>
